@@ -6,12 +6,12 @@ function startUp() {
     let start = `
     <div class="startup">
         <h3>Click below to test your knowledge of the Star Wars universe...may the Force be with you.</h3>
-        <button type="button">Begin</button>
+        <button class="begin" type="button">Begin</button>
     </div>`;
 
     $('main').html(start);
 
-    $('main').on('click', '.startup', function(e) {
+    $('main').on('click', '.begin', function(e) {
         render();
     });
 }
@@ -24,7 +24,7 @@ function render() {
 
     let code = `
     <div class="box">
-        <div class="question">${question.name}</div>
+        <div class="question"><h3>Question ${STORE.count + 1} of 5<br>${question.name}</h3></div>
         <form class="form">
             <input type="radio" id="answerOne" name="answer" value="${question.answers[0]}" required>
             <label for="answerOne">${question.answers[0]}</label><br>
@@ -47,20 +47,22 @@ function gameOver() {
 
     let endPage = `
     <div class="game-over">
-        <h2>Quiz Results</h2>
+        <h2>Your Results:</h2>
         <h3>
-            Correct:${STORE.correct}<br>Incorrect:${STORE.incorrect}<br>${STORE.message[STORE.correct]}
+            Correct: ${STORE.correct}<br>Incorrect: ${STORE.incorrect}<br>${STORE.message[STORE.correct - 1]}
         </h3>
-        <p>Click below to test your knowledge again</p>
-        <button type="button">Retake Quiz</button>
+        <p>Click below to start again</p>
+        <button class="reset" type="button">Retake Quiz</button>
     </div>`;
 
     if(STORE.count === STORE.quest.length - 1) {
         $('main').html(endPage);
     }
-    $('main').on('click', '.game-over', function (e) {
+    $('main').on('click', '.reset', function (e) {
         STORE.count = 0;
-        render();
+        STORE.correct = 0;
+        STORE.incorrect = 0;
+        startUp();
     });
 }
 
@@ -94,29 +96,3 @@ function main() {
 
 
 $(main);
-/**
- *
- * Technical requirements:
- *
- * Your app should include a render() function, that regenerates the view each time the store is updated.
- * See your course material, consult your instructor, and reference the slides for more details.
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- *
- */
-
-/********** TEMPLATE GENERATION FUNCTIONS **********/
-
-// These functions return HTML templates
-
-/********** RENDER FUNCTION(S) **********/
-
-// This function conditionally replaces the contents of the <main> tag based on the state of the store
-
-/********** EVENT HANDLER FUNCTIONS **********/
-
-// These functions handle events (submit, click, etc)
