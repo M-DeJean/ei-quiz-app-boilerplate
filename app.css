@@ -33,8 +33,7 @@ main {
 
 .startup h3{
   margin-top: 50px;
-  padding-bottom: 30px;
-  line-height: 3.5;
+  line-height: 2;
   font-size: 14px;
 }
 
@@ -59,5 +58,18 @@ button {
   h1 {
     font-size: 42px;
   }
-  
+
+  .startup h3{
+    font-size: 24px;
+  }
+
+  button{
+    width: 20%;
+    margin-bottom: 20px;
+    margin-top: 10px
+  }
+
+  .box {
+    font-size: 20px;
+  }
 }
