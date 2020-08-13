@@ -5,7 +5,7 @@ function startUp() {
 
     let start = `
     <div class="startup">
-        <h3>Click below to test your knowledge of the Star Wars universe...may the Force be with you.</h3>
+        <h3>Click below to test your knowledge of the Star Wars universe<br>May the Force be with you...</h3>
         <button class="begin" type="button">Begin</button>
     </div>`;
 
