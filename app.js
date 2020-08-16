@@ -36,7 +36,8 @@ function render() {
             <label for="answerFour">${question.answers[3]}</label><br>
             <button type="submit" id="submit">Submit</button>
         </form>
-    </div>`;
+    </div>
+    <footer>Current Score: ${STORE.correct} / ${STORE.count}</footer>`;
 
     $('main').html(code);
 }

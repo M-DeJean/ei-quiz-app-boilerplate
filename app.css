@@ -20,6 +20,12 @@ main {
   margin: auto;
 }
 
+footer {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+}
+
 .box, .game-over, .startup {
   margin: auto;
   width: 80%;
