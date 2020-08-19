@@ -1,29 +1,32 @@
 'use strict';
 
-function startUp() {
-// displays HTML content on start-up. Renders quiz when button is clicked
 
-    let start = `
-    <div class="startup">
+
+
+/*----------------------------------------GENERATOR FUNCTIONS----------------------------------------*/
+
+
+function generateStart() {
+
+    // generates HTML for startup page
+
+    let start =
+        `<div class="startup">
         <h3>Click below to test your knowledge of the Star Wars universe<br>May the Force be with you...</h3>
         <button class="begin" type="button">Begin</button>
     </div>`;
 
-    $('main').html(start);
-
-    $('main').on('click', '.begin', function(e) {
-        render();
-    });
+    return start;
 }
 
+function generateQuiz() {
 
-function render() {
-// generates html template from data in STORE object to render quiz
+    // generates HTML for quiz questions
 
     let question = STORE.quest[STORE.count];
 
-    let code = `
-    <div class="box">
+    let quiz =
+        `<div class="box">
         <div class="question"><h3>Question ${STORE.count + 1} of 5<br>${question.name}</h3></div>
         <form class="form">
             <input type="radio" id="answerOne" name="answer" value="${question.answers[0]}" required>
@@ -39,60 +42,106 @@ function render() {
     </div>
     <footer>Current Score: ${STORE.correct} / ${STORE.count}</footer>`;
 
-    $('main').html(code);
+    return quiz;
+}
+
+function generateResults() {
+
+    // generates HTML for results page
+
+    let res =
+        `<div class="game-over">
+            <h2>Your Results:</h2>
+            <h3>
+                Correct: ${STORE.correct}<br>Incorrect: ${STORE.incorrect}<br>${STORE.message[STORE.correct]}
+            </h3>
+            <p>Click below to start again</p>
+            <button class="reset" type="button">Retake Quiz</button>
+        </div>`;
+
+    return res;
 }
 
 
-function gameOver() {
-// if question number = length of quiz, give user score and option to start over
 
-    let endPage = `
-    <div class="game-over">
-        <h2>Your Results:</h2>
-        <h3>
-            Correct: ${STORE.correct}<br>Incorrect: ${STORE.incorrect}<br>${STORE.message[STORE.correct - 1]}
-        </h3>
-        <p>Click below to start again</p>
-        <button class="reset" type="button">Retake Quiz</button>
-    </div>`;
 
-    if(STORE.count === STORE.quest.length - 1) {
-        $('main').html(endPage);
-    }
+/*----------------------------------------RENDER FUNCTIONS----------------------------------------*/
+
+
+// when called, these functions update DOM with HTML from generators
+
+function renderStart() {
+    $('main').html(generateStart);
+}
+function renderQuiz() {
+    $('main').html(generateQuiz);
+}
+
+function renderRes() {
+    $('main').html(generateResults);
+}
+
+
+
+
+/*----------------------------------------EVENT LISTENER FUNCTIONS----------------------------------------*/
+
+
+function handleClickStart() {
+
+    // displays quiz questions once BEGIN is clicked from startup page
+
+    $('main').on('click', '.begin', function (e) {
+        renderQuiz();
+    });
+}
+
+function handleClickReset() {
+
+    // when RESET is clicked on results page, score & question count are refreshed and starts quiz over
+
     $('main').on('click', '.reset', function (e) {
         STORE.count = 0;
         STORE.correct = 0;
         STORE.incorrect = 0;
-        startUp();
+        renderStart();
     });
 }
 
+function handleClickSubmit() {
 
-function nextQuestion() {
-// listens for user submission. alerts correct or incorrect message
+    // once quiz answer is submitted, checks for right/wrong answer and moves to next question
+    // if the end of quiz is reached, displays results page
 
-    $('main').on('submit', '.form', function(e) {
+    $('main').on('submit', '.form', function (e) {
         e.preventDefault();
         let selection = $('input[name=answer]:checked').val();
-        if(STORE.quest[STORE.count].isCorrect === selection) {
+        if (STORE.quest[STORE.count].isCorrect === selection) {
             STORE.correct++;
             alert('Correct!');
         } else {
             STORE.incorrect++;
             alert('Incorrect');
         }
-        gameOver();
         STORE.count++;
-        render();
+        if (STORE.count === STORE.quest.length) {
+            renderRes();
+        } else {
+            renderQuiz();
+        }
     });
 }
 
 
 function main() {
-// runs these functions when page loads
-    startUp();
-    nextQuestion();
-    console.log(STORE.quest);
+
+    // runs these functions when page loads
+
+    handleClickReset();
+    renderStart();
+    generateStart();
+    handleClickStart();
+    handleClickSubmit();
 }
 
 

@@ -28,6 +28,6 @@ const STORE = {
         }
     ],
     message: [
-        'Unacceptable!', 'You can do better!',  'Not bad.', 'Pretty good!', 'Perfect score!' 
+        'Are you a droid?','Unacceptable! Remember your training, young apprentice.', 'You can do better! Let the Force guide you.',  'Not bad, but you have yet to realize your true potential.', 'Very good! The Force is strong within you.', 'Master Yoda was right! You are the Chosen One!' 
     ]
 };
