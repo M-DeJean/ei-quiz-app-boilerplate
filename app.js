@@ -8,7 +8,7 @@
 
 function generateStart() {
 
-    // generates HTML for startup page
+    // generates HTML on startup
 
     let start =
         `<div class="startup">
